@@ -37,6 +37,13 @@ namespace backend.Controllers
         [HttpPost("add")]
         public IActionResult AddClient([FromBody] Clients client)
         {
+            var emailExists = _clientRepository.GetAll().FirstOrDefault(x => x.Email == client.Email);
+
+            if (emailExists != null)
+            {
+                return BadRequest("Email already exists");
+            }
+            
             try
             {
                 return Ok(_clientRepository.AddClient(client));
@@ -70,7 +77,7 @@ namespace backend.Controllers
         {
             try
             {
-                return Ok(_clientRepository.DeleteClient(id));
+                return Ok( new { message = "User removed successfully" });
             }
             catch (System.Exception e)
             {
