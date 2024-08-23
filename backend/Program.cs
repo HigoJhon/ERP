@@ -1,8 +1,14 @@
+using backend.Context;
+using backend.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ERPContext>();
+builder.Services.AddScoped<IERPContext, ERPContext>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
